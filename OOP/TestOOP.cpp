@@ -32,6 +32,9 @@ public:
 	}
 
 	virtual void DoingSth();
+	virtual ~Person() {
+		cout << "Personal Destructor" << endl;
+	}
 };
 
 class Student :public Person {
@@ -52,8 +55,16 @@ public:
 		this->StudentID = StudentID;
 	}
 
+	int getID() {
+		return StudentID;
+	}
+
 	virtual void DoingSth() override{
 		cout << "Study" << endl;
+	}
+
+	~Student() {
+		cout << "Student Destructor" << endl;
 	}
 };
 
@@ -74,25 +85,45 @@ public:
 		this->EngID = EngID;
 	}
 
+	int getID() {
+		return EngID;
+	}
+
 	virtual void DoingSth() override{
 		cout << "Working" << endl;
+	}
+
+	~Engineer() {
+		cout << "Engineer Destructor" << endl;
 	}
 };
 
 int main() {
-	Person Phuc = Person("Hoang Phuc Anh", 31, "982EU823928" );
-	Student Hue ("Hoang Kim Hue", 30, "38JOI23239", 12);
-	Engineer Yen("Hoang Hai Yen", 25, "9482OIJ2323",32);
+	Person *Phuc = new Student("Hoang Phuc Anh", 31, "982EU823928", 23);
+	Student *Hue = new Student("Hoang Kim Hue", 30, "38JOI23239", 12);
+	Engineer *Yen = new Engineer("Hoang Hai Yen", 25, "9482OIJ2323",32);
+	cout << "Person : " << Phuc->getName() << endl;
+	cout << "Tuoi : " << Phuc->getAge() << endl;
+	cout << "Number : " << Phuc->getNumber() << endl;
+	
+	cout << "Hoc sinh : " << Hue->getName()  << " len do" << endl;
+	cout << "Tuoi : " << Hue->getAge() << " nghe lenh xuong tu tren bo" << endl;
+	cout << "Number : " << Hue->getNumber() << " xam nhap duong day ma tuy. O can biet thu ben ho" << endl;
+	cout << "ID : " << Hue->getID() << endl;
+	Hue->DoingSth();
 
-	cout << "Hoc sinh : " << Hue.getName()  << " len do" << endl;
-	cout << "Tuoi : " << Hue.getAge() << " nghe lenh xuong tu tren bo" << endl;
-	cout << "Number : " << Hue.getNumber() << " xam nhap duong day ma tuy. O can biet thu ben ho" << endl;
-	Hue.DoingSth();
+	cout << "Ki su : " << Yen->getName() << endl;
+	cout << "Tuoi : " << Yen->getAge() << endl;
+	cout << "Number : " << Yen->getNumber() << endl;
+	cout << "ID : " << Yen->getID() << endl;
+	Yen->DoingSth();
 
-	cout << "Ki su : " << Yen.getName() << endl;
-	cout << "Tuoi : " << Yen.getAge() << endl;
-	cout << "Number : " << Yen.getNumber() << endl;
-	Yen.DoingSth();
+	cout << "Delete Phuc" << endl;
+	delete Phuc;
+	cout << "Delete Hue" << endl;
+	delete Hue;
+	cout << "Delete Yen" << endl;
+	delete Yen;
 
 	return 0;
 }
