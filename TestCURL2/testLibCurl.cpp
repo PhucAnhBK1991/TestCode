@@ -45,17 +45,11 @@ int main(void)
 
   curl = curl_easy_init();
   if(curl) {
-    //FILE *fp = fopen("output.txt", "wb");
     curl_easy_setopt(curl, CURLOPT_URL, "https://packagist.org/packages/yiisoft/yii2.json");
-    cout << "Set url ok" << endl;
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-    cout << "CURLOPT_WRITEFUNCTION ok" << endl;
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
-    cout << "CURLOPT_WRITEDATA ok" << endl;
     res = curl_easy_perform(curl);
     curl_easy_cleanup(curl);
-    //fclose(fp);
-    //std::cout << readBuffer << std::endl;
   }
 
   Parser parser;
@@ -65,6 +59,17 @@ int main(void)
   Object::Ptr jsonObject = ParsedRet.extract<Object::Ptr>();
 
   cout << "Package : " << GetValue(jsonObject, "package") << endl;
+
+  curl = curl_easy_init();
+  if(curl) {
+    FILE *fp = fopen("output.txt", "wb");
+    curl_easy_setopt(curl, CURLOPT_URL, "https://packagist.org/packages/yiisoft/yii2.json");
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteFileBack);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+    res = curl_easy_perform(curl);
+    curl_easy_cleanup(curl);
+    fclose(fp);
+  }
 
   return 0;
 }
